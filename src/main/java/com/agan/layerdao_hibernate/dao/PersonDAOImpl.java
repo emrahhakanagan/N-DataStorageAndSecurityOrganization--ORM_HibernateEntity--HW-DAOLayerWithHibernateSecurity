@@ -16,12 +16,12 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Transactional
     public List<Person> getPersonsByCity(String city) {
-        String query = "SELECT p FROM Person p WHERE p.cityOfLiving = :cityinJPQL";
+        String query = "SELECT p FROM Person p WHERE p.cityOfLiving = :cityInJPQL";
         List<Person> persons;
 
         try {
             persons = entityManager.createQuery(query, Person.class)
-                    .setParameter("cityinJPQL", city)
+                    .setParameter("cityInJPQL", city)
                     .getResultList();
         } catch (RuntimeException e) {
             System.out.println("Error: " + e);
