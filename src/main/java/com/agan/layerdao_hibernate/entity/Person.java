@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(schema = "hibernate_hw", name = "person")
+@Table(schema = "orm_hibernate_hw", name = "person")
 @IdClass(PersonId.class)
 public class Person {
 
