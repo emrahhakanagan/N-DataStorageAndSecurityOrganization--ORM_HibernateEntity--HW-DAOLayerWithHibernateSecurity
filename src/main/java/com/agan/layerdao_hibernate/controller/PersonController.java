@@ -3,8 +3,6 @@ package com.agan.layerdao_hibernate.controller;
 import com.agan.layerdao_hibernate.entity.Person;
 import com.agan.layerdao_hibernate.service.PersonService;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
