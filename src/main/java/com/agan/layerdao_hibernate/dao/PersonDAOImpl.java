@@ -16,18 +16,9 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Transactional
     public List<Person> getPersonsByCity(String city) {
-//        String query = "SELECT p FROM Person p WHERE p.cityOfLiving = :cityInJPQL";
-
-//        String query = "FROM orm_hibernate_hw.person JOIN orm_hibernate_hw.orders" +
-//                       "ON person.age = orders.customer_age" +
-//                       "AND person.name = orders.customer_name" +
-//                       "AND person.surname = orders.customer_surname" +
-//                       "WHERE city_of_living = :city";
-
 
         String query = "SELECT o FROM Order o JOIN o.person p " +
                        "WHERE p.cityOfLiving = :cityInJPQL";
-
 
         List<Person> persons;
 

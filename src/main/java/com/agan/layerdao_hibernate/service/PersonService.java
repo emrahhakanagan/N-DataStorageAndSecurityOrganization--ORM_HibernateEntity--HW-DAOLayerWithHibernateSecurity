@@ -1,7 +1,7 @@
 package com.agan.layerdao_hibernate.service;
 
-import com.agan.layerdao_hibernate.entity.Person;
 import com.agan.layerdao_hibernate.dao.PersonDAOImpl;
+import com.agan.layerdao_hibernate.entity.Person;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;

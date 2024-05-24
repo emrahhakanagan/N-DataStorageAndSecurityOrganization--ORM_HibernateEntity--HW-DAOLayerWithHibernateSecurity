@@ -1,6 +1,5 @@
 package com.agan.layerdao_hibernate.entity;
 
-import com.agan.layerdao_hibernate.entity.enums.PaymentType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
