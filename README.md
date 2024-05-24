@@ -6,50 +6,65 @@
 
 # DAO Layer with Hibernate
 
-## Description
+This project demonstrates the implementation of a DAO layer using Hibernate with Spring Boot. It includes an example of a `Person` entity and an `Order` entity with a one-to-many relationship. The project also features a controller to fetch persons based on their city of living.
 
-This project is a Spring Boot application that demonstrates the use of the Data Access Object (DAO) pattern with Hibernate. It includes functionalities to interact with a database of persons, specifically allowing retrieval of persons based on their city of living.
+## Project Structure
 
-## Prerequisites
+- **Entity Classes**:
+  - `Person`: Represents a person with fields such as name, surname, age, phone number, and city of living.
+  - `Order`: Represents an order with fields such as date, amount, and payment type. Each order is associated with a person.
 
-- Java 17 or higher
-- Maven 3.6.3 or higher
-- PostgreSQL or another relational database
+- **Repository**:
+  - `PersonDAO`: Interface defining the method to fetch persons by city.
+  - `PersonDAOImpl`: Implementation of the `PersonDAO` interface using Hibernate's `EntityManager`.
+
+- **Service**:
+  - `PersonService`: Service layer to handle business logic and interact with the `PersonDAO`.
+
+- **Controller**:
+  - `PersonController`: REST controller to handle HTTP requests and return responses.
+
+## Dependencies
+
+The project uses the following dependencies:
+- Spring Boot Starter Data JPA
+- Spring Boot Starter Web
+- Hibernate
+- Lombok
 
 ## Getting Started
 
-### Clone the Repository
+### Prerequisites
 
+Ensure you have the following installed:
+- Java 17
+- Maven
+- PostgreSQL
+
+### Setting Up the Database
+
+1. Create a PostgreSQL database named `orm_hibernate_hw`.
+2. Update the `application.properties` file with your database credentials.
+
+### Running the Application
+
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Run the application using Maven:
 ```
-git clone <repository-url>
-cd <repository-directory>
+   mvn spring-boot:run
 ```
-
-## Set Up the Database
-Create a PostgreSQL database named.
-Update the application.properties file with your PostgreSQL username and password.
-
-## Build and Run the Application
-- mvn clean install
-- mvn spring-boot:run
-
-
-## Application Structure
-- Entity: The Person entity represents the persons table in the database.
-- DAO: The PersonDAOImpl class provides methods to interact with the database.
-- Service: The PersonService class contains business logic and calls the DAO methods.
-- Controller: The PersonController class handles HTTP requests and responses.
 
 ## API Endpoints
-- GET /persons/by-city: Retrieves a list of persons based on the city of living.
-  - Query Parameters:
-      - city (String): The name of the city.
+### Fetch Persons by City
+* URL: /persons/by-city
+* Method: GET
+* Query Parameters:
+  * city: The city of living of the persons to be fetched.
+* Response: A list of persons living in the specified city, along with their associated orders.
 
-## Example Request
-curl -X GET "http://localhost:8080/persons/by-city?city=Moscow"
+## Example:
+```
+curl -X GET "http://localhost:8080/persons/by-city?city=city_name"
+```
 
-## Dependencies
-- Spring Boot Starter Data JPA
-- Spring Boot Starter Web
-- PostgreSQL JDBC Driver
-- Lombok
