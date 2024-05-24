@@ -1,6 +1,7 @@
 package com.agan.layerdao_hibernate.entity;
 
 import com.agan.layerdao_hibernate.entity.enums.PaymentType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,18 +22,22 @@ public class Order {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+//    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "customer_name", referencedColumnName = "name"),
+            @JoinColumn(name = "customer_surname", referencedColumnName = "surname"),
+            @JoinColumn(name = "customer_age", referencedColumnName = "age")
+    })
+    @JsonBackReference
     private Person person;
 
-    @Id
     @Column(name = "date")
     private Date date;
 
-    @Id
     @Column(name = "amount")
     private double amount;
 
     @Column(name = "payment_type")
-    private PaymentType paymentType;
+    private String paymentType;
 
 }
