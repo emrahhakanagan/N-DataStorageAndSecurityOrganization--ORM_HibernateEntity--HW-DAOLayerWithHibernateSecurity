@@ -4,52 +4,80 @@
 
 #### --> Task 1 --> DAO Layer (Data Access Object) with Hibernate
 
-# DAO Layer with Hibernate
+# Hibernate DAO Layer with Liquibase Migration
 
-## Description
+This project demonstrates the implementation of a DAO layer using Hibernate and Liquibase for database migrations in a Spring Boot application. It includes entities representing `Person` and `Order`, and demonstrates the use of one-to-many and many-to-one relationships.
 
-This project is a Spring Boot application that demonstrates the use of the Data Access Object (DAO) pattern with Hibernate. It includes functionalities to interact with a database of persons, specifically allowing retrieval of persons based on their city of living.
+## Project Structure
 
-## Prerequisites
+- `entity` package: Contains the `Person` and `Order` entity classes.
+- `dao` package: Contains the DAO interfaces and implementations.
+- `service` package: Contains the service classes.
+- `controller` package: Contains the controller classes.
+- `resources/db/changelog`: Contains Liquibase changelog files for database migrations.
 
-- Java 17 or higher
-- Maven 3.6.3 or higher
-- PostgreSQL or another relational database
+## Setup and Run
 
-## Getting Started
-
-### Clone the Repository
+1. **Clone the Repository**
 
 ```
-git clone <repository-url>
-cd <repository-directory>
+   git clone <repository-url>
+   cd <repository-directory>
 ```
 
-## Set Up the Database
-Create a PostgreSQL database named.
-Update the application.properties file with your PostgreSQL username and password.
+2. Create Database
 
-## Build and Run the Application
-- mvn clean install
-- mvn spring-boot:run
+Ensure you have a PostgreSQL database running and create a new database for the project.
+```
+CREATE DATABASE yourdatabase;
+```
 
+3. Configure Application Properties
 
-## Application Structure
-- Entity: The Person entity represents the persons table in the database.
-- DAO: The PersonDAOImpl class provides methods to interact with the database.
-- Service: The PersonService class contains business logic and calls the DAO methods.
-- Controller: The PersonController class handles HTTP requests and responses.
+Update the src/main/resources/application.properties file with your database credentials.
+```
+spring.datasource.url=jdbc:postgresql://localhost:5432/yourdatabase
+spring.datasource.username=yourusername
+spring.datasource.password=yourpassword
+spring.liquibase.change-log=classpath:db/changelog/db.changelog-master.yaml
+```
+
+4. Build and Run the Application
+```
+mvn clean install
+mvn spring-boot:run
+```
+
+5. Access the Application
+```
+The application will be accessible at http://localhost:8080.
+```
 
 ## API Endpoints
-- GET /persons/by-city: Retrieves a list of persons based on the city of living.
-  - Query Parameters:
-      - city (String): The name of the city.
 
-## Example Request
-curl -X GET "http://localhost:8080/persons/by-city?city=Moscow"
+### Get Persons by City
+```
+GET /persons/by-city?city={city}
+```
 
-## Dependencies
-- Spring Boot Starter Data JPA
-- Spring Boot Starter Web
-- PostgreSQL JDBC Driver
-- Lombok
+This endpoint retrieves a list of persons living in the specified city.
+
+## Database Migrations
+The project uses Liquibase for database migrations. 
+The changelog files are located in the src/main/resources/db/changelog directory.
+
+## Changelog Files
+* db.changelog-master.yaml: The main changelog file that includes all individual changelog files.
+* V0001__create_schema.sql: Creates the database schema.
+* V0002__create_table_person.sql: Creates the person table.
+* V0003__create_table_orders.sql: Creates the orders table.
+* V0004__alter_table_orders.sql: Alter the orders table.
+* V0005__insert_into_person.sql: Insert into the person table.
+* V0006_insert_into_orders.sql: Insert into the orders table.
+
+## Technologies Used
+* Spring Boot
+* Hibernate
+* Liquibase
+* PostgreSQL
+* Maven

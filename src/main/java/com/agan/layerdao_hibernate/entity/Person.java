@@ -1,10 +1,13 @@
 package com.agan.layerdao_hibernate.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -36,6 +39,10 @@ public class Person {
 
     @Column(name = "city_of_living")
     private String cityOfLiving;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Order> orders;
 
 
 }
