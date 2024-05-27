@@ -4,92 +4,83 @@
 
 #### --> Task 1 --> DAO Layer (Data Access Object) with Hibernate
 
-# Hibernate DAO Layer with Liquibase Migration
+# Layer DAO with JPA Repositories and JPQL Queries
 
-# LayerDAO with Hibernate
+## Description
 
-This project demonstrates the implementation of a Data Access Layer using Hibernate and JPA Repositories with Spring Boot. The project includes basic CRUD operations and custom queries for a `Person` entity and an `Order` entity.
+This project demonstrates the use of JPA Repositories with JPQL Queries in a Spring Boot application. The application manages `Person` and `Order` entities, allowing CRUD operations and custom queries using JPQL.
 
-## Technologies Used
+## Setup and Running the Application
 
-- Java 17
-- Spring Boot 3.2.5
-- Hibernate
-- Spring Data JPA
-- PostgreSQL
-- Liquibase
+1. **Clone the Repository**
 
-## Getting Started
+    ```sh
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
 
-### Prerequisites
+2. **Configure Database**
 
-- Java 17
-- Maven
-- PostgreSQL
+   Update the `application.properties` file with your PostgreSQL database configuration.
 
-### Installation
+    ```properties
+    spring.datasource.url=jdbc:postgresql://localhost:5432/your-database
+    spring.datasource.username=your-username
+    spring.datasource.password=your-password
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.show-sql=true
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+    ```
 
-1. Clone the repository:
+3. **Run the Application**
 
-```
-   git clone <repository-url>
-```
+    ```sh
+    ./mvnw spring-boot:run
+    ```
 
-2. Navigate to the project directory:
-```
-cd LayerDAO_Hibernate
-```
+## Endpoints
 
-3. Update the PostgreSQL credentials in the application.properties file:
-```
-spring.datasource.url=jdbc:postgresql://localhost:5432/your_database
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-```
+1. **Get Persons by City**
 
-4. Run the application:
-```
-mvn spring-boot:run
-```
+    ```
+    GET /persons/by-city?city={city}
+    ```
 
-## API Endpoints
+   Returns a list of persons living in the specified city.
 
-### Get Persons by City
-* URL: /persons/by-city
-* Method: GET
-* Query Params: city
-* Description: Retrieves a list of persons living in the specified city.
-* Example:
-```
-curl -X GET "http://localhost:8080/persons/by-city?city=Moscow"
-```
+2. **Get Persons by Age**
 
-### Get Persons by Age Less Than
-* URL: /persons/by-age
-* Method: GET
-* Query Params: age
-* Description: Retrieves a list of persons younger than the specified age, sorted by age in ascending order.
-* Example:
-```
-curl -X GET "http://localhost:8080/persons/by-age?age=30"
-```
+    ```
+    GET /persons/by-age-less-than?age={age}
+    ```
 
-### Get Person by Name and Surname
-* URL: /persons/by-name-surname
-* Method: GET
-* Query Params: name, surname
-* Description: Retrieves a person by their name and surname.
-* Example:
-```
-curl -X GET "http://localhost:8080/persons/by-name-surname?name=John&surname=Doe"
-```
+   Returns a list of persons younger than the specified age, sorted by age in ascending order.
 
-Database Schema
-The schema is managed using Liquibase and can be found in the db.changelog-master.yaml file.
+3. **Get Person by Name and Surname**
+
+    ```
+    GET /persons/by-name-surname?name={name}&surname={surname}
+    ```
+
+   Returns the person with the specified name and surname.
+
+## Project Structure
+
+- **PersonRepositoryJPA_QueryJPQL**: Interface for database operations using JPQL queries.
+- **PersonService**: Service layer for business logic.
+- **PersonController**: REST controller for handling HTTP requests.
+
+## Dependencies
+
+- Spring Boot Starter Data JPA
+- Spring Boot Starter Web
+- PostgreSQL Driver
+- Lombok
 
 ## Contributing
+
 1. Fork the repository.
-2. Create a new branch.
-3. Make your changes and commit them.
-4. Push to your branch.
-5. Create a pull request.
+2. Create a new feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
