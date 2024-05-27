@@ -16,7 +16,10 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Transactional
     public List<Person> getPersonsByCity(String city) {
-        String query = "SELECT p FROM Person p WHERE p.cityOfLiving = :cityInJPQL";
+
+        String query = "SELECT o FROM Order o JOIN o.person p " +
+                       "WHERE p.cityOfLiving = :cityInJPQL";
+
         List<Person> persons;
 
         try {

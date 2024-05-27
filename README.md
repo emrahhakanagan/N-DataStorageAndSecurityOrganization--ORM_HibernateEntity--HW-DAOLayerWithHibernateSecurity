@@ -4,52 +4,83 @@
 
 #### --> Task 1 --> DAO Layer (Data Access Object) with Hibernate
 
-# DAO Layer with Hibernate
+# Layer DAO with JPA Repositories and JPQL Queries
 
 ## Description
 
-This project is a Spring Boot application that demonstrates the use of the Data Access Object (DAO) pattern with Hibernate. It includes functionalities to interact with a database of persons, specifically allowing retrieval of persons based on their city of living.
+This project demonstrates the use of JPA Repositories with JPQL Queries in a Spring Boot application. The application manages `Person` and `Order` entities, allowing CRUD operations and custom queries using JPQL.
 
-## Prerequisites
+## Setup and Running the Application
 
-- Java 17 or higher
-- Maven 3.6.3 or higher
-- PostgreSQL or another relational database
+1. **Clone the Repository**
 
-## Getting Started
+    ```sh
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
 
-### Clone the Repository
+2. **Configure Database**
 
-```
-git clone <repository-url>
-cd <repository-directory>
-```
+   Update the `application.properties` file with your PostgreSQL database configuration.
 
-## Set Up the Database
-Create a PostgreSQL database named.
-Update the application.properties file with your PostgreSQL username and password.
+    ```properties
+    spring.datasource.url=jdbc:postgresql://localhost:5432/your-database
+    spring.datasource.username=your-username
+    spring.datasource.password=your-password
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.show-sql=true
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+    ```
 
-## Build and Run the Application
-- mvn clean install
-- mvn spring-boot:run
+3. **Run the Application**
 
+    ```sh
+    ./mvnw spring-boot:run
+    ```
 
-## Application Structure
-- Entity: The Person entity represents the persons table in the database.
-- DAO: The PersonDAOImpl class provides methods to interact with the database.
-- Service: The PersonService class contains business logic and calls the DAO methods.
-- Controller: The PersonController class handles HTTP requests and responses.
+## Endpoints
 
-## API Endpoints
-- GET /persons/by-city: Retrieves a list of persons based on the city of living.
-  - Query Parameters:
-      - city (String): The name of the city.
+1. **Get Persons by City**
 
-## Example Request
-curl -X GET "http://localhost:8080/persons/by-city?city=Moscow"
+    ```
+    GET /persons/by-city?city={city}
+    ```
+
+   Returns a list of persons living in the specified city.
+
+2. **Get Persons by Age**
+
+    ```
+    GET /persons/by-age-less-than?age={age}
+    ```
+
+   Returns a list of persons younger than the specified age, sorted by age in ascending order.
+
+3. **Get Person by Name and Surname**
+
+    ```
+    GET /persons/by-name-surname?name={name}&surname={surname}
+    ```
+
+   Returns the person with the specified name and surname.
+
+## Project Structure
+
+- **PersonRepositoryJPA_QueryJPQL**: Interface for database operations using JPQL queries.
+- **PersonService**: Service layer for business logic.
+- **PersonController**: REST controller for handling HTTP requests.
 
 ## Dependencies
+
 - Spring Boot Starter Data JPA
 - Spring Boot Starter Web
-- PostgreSQL JDBC Driver
+- PostgreSQL Driver
 - Lombok
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
