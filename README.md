@@ -4,52 +4,92 @@
 
 #### --> Task 1 --> DAO Layer (Data Access Object) with Hibernate
 
-# DAO Layer with Hibernate
+# Hibernate DAO Layer with Liquibase Migration
 
-## Description
+# LayerDAO with Hibernate
 
-This project is a Spring Boot application that demonstrates the use of the Data Access Object (DAO) pattern with Hibernate. It includes functionalities to interact with a database of persons, specifically allowing retrieval of persons based on their city of living.
+This project demonstrates the implementation of a Data Access Layer using Hibernate and JPA Repositories with Spring Boot. The project includes basic CRUD operations and custom queries for a `Person` entity and an `Order` entity.
 
-## Prerequisites
+## Technologies Used
 
-- Java 17 or higher
-- Maven 3.6.3 or higher
-- PostgreSQL or another relational database
+- Java 17
+- Spring Boot 3.2.5
+- Hibernate
+- Spring Data JPA
+- PostgreSQL
+- Liquibase
 
 ## Getting Started
 
-### Clone the Repository
+### Prerequisites
+
+- Java 17
+- Maven
+- PostgreSQL
+
+### Installation
+
+1. Clone the repository:
 
 ```
-git clone <repository-url>
-cd <repository-directory>
+   git clone <repository-url>
 ```
 
-## Set Up the Database
-Create a PostgreSQL database named.
-Update the application.properties file with your PostgreSQL username and password.
+2. Navigate to the project directory:
+```
+cd LayerDAO_Hibernate
+```
 
-## Build and Run the Application
-- mvn clean install
-- mvn spring-boot:run
+3. Update the PostgreSQL credentials in the application.properties file:
+```
+spring.datasource.url=jdbc:postgresql://localhost:5432/your_database
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+```
 
-
-## Application Structure
-- Entity: The Person entity represents the persons table in the database.
-- DAO: The PersonDAOImpl class provides methods to interact with the database.
-- Service: The PersonService class contains business logic and calls the DAO methods.
-- Controller: The PersonController class handles HTTP requests and responses.
+4. Run the application:
+```
+mvn spring-boot:run
+```
 
 ## API Endpoints
-- GET /persons/by-city: Retrieves a list of persons based on the city of living.
-  - Query Parameters:
-      - city (String): The name of the city.
 
-## Example Request
+### Get Persons by City
+* URL: /persons/by-city
+* Method: GET
+* Query Params: city
+* Description: Retrieves a list of persons living in the specified city.
+* Example:
+```
 curl -X GET "http://localhost:8080/persons/by-city?city=Moscow"
+```
 
-## Dependencies
-- Spring Boot Starter Data JPA
-- Spring Boot Starter Web
-- PostgreSQL JDBC Driver
-- Lombok
+### Get Persons by Age Less Than
+* URL: /persons/by-age
+* Method: GET
+* Query Params: age
+* Description: Retrieves a list of persons younger than the specified age, sorted by age in ascending order.
+* Example:
+```
+curl -X GET "http://localhost:8080/persons/by-age?age=30"
+```
+
+### Get Person by Name and Surname
+* URL: /persons/by-name-surname
+* Method: GET
+* Query Params: name, surname
+* Description: Retrieves a person by their name and surname.
+* Example:
+```
+curl -X GET "http://localhost:8080/persons/by-name-surname?name=John&surname=Doe"
+```
+
+Database Schema
+The schema is managed using Liquibase and can be found in the db.changelog-master.yaml file.
+
+## Contributing
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes and commit them.
+4. Push to your branch.
+5. Create a pull request.
