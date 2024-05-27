@@ -6,78 +6,90 @@
 
 # Hibernate DAO Layer with Liquibase Migration
 
-This project demonstrates the implementation of a DAO layer using Hibernate and Liquibase for database migrations in a Spring Boot application. It includes entities representing `Person` and `Order`, and demonstrates the use of one-to-many and many-to-one relationships.
+# LayerDAO with Hibernate
 
-## Project Structure
+This project demonstrates the implementation of a Data Access Layer using Hibernate and JPA Repositories with Spring Boot. The project includes basic CRUD operations and custom queries for a `Person` entity and an `Order` entity.
 
-- `entity` package: Contains the `Person` and `Order` entity classes.
-- `dao` package: Contains the DAO interfaces and implementations.
-- `service` package: Contains the service classes.
-- `controller` package: Contains the controller classes.
-- `resources/db/changelog`: Contains Liquibase changelog files for database migrations.
+## Technologies Used
 
-## Setup and Run
+- Java 17
+- Spring Boot 3.2.5
+- Hibernate
+- Spring Data JPA
+- PostgreSQL
+- Liquibase
 
-1. **Clone the Repository**
+## Getting Started
+
+### Prerequisites
+
+- Java 17
+- Maven
+- PostgreSQL
+
+### Installation
+
+1. Clone the repository:
 
 ```
    git clone <repository-url>
-   cd <repository-directory>
 ```
 
-2. Create Database
-
-Ensure you have a PostgreSQL database running and create a new database for the project.
+2. Navigate to the project directory:
 ```
-CREATE DATABASE yourdatabase;
+cd LayerDAO_Hibernate
 ```
 
-3. Configure Application Properties
-
-Update the src/main/resources/application.properties file with your database credentials.
+3. Update the PostgreSQL credentials in the application.properties file:
 ```
-spring.datasource.url=jdbc:postgresql://localhost:5432/yourdatabase
-spring.datasource.username=yourusername
-spring.datasource.password=yourpassword
-spring.liquibase.change-log=classpath:db/changelog/db.changelog-master.yaml
+spring.datasource.url=jdbc:postgresql://localhost:5432/your_database
+spring.datasource.username=your_username
+spring.datasource.password=your_password
 ```
 
-4. Build and Run the Application
+4. Run the application:
 ```
-mvn clean install
 mvn spring-boot:run
-```
-
-5. Access the Application
-```
-The application will be accessible at http://localhost:8080.
 ```
 
 ## API Endpoints
 
 ### Get Persons by City
+* URL: /persons/by-city
+* Method: GET
+* Query Params: city
+* Description: Retrieves a list of persons living in the specified city.
+* Example:
 ```
-GET /persons/by-city?city={city}
+curl -X GET "http://localhost:8080/persons/by-city?city=Moscow"
 ```
 
-This endpoint retrieves a list of persons living in the specified city.
+### Get Persons by Age Less Than
+* URL: /persons/by-age
+* Method: GET
+* Query Params: age
+* Description: Retrieves a list of persons younger than the specified age, sorted by age in ascending order.
+* Example:
+```
+curl -X GET "http://localhost:8080/persons/by-age?age=30"
+```
 
-## Database Migrations
-The project uses Liquibase for database migrations. 
-The changelog files are located in the src/main/resources/db/changelog directory.
+### Get Person by Name and Surname
+* URL: /persons/by-name-surname
+* Method: GET
+* Query Params: name, surname
+* Description: Retrieves a person by their name and surname.
+* Example:
+```
+curl -X GET "http://localhost:8080/persons/by-name-surname?name=John&surname=Doe"
+```
 
-## Changelog Files
-* db.changelog-master.yaml: The main changelog file that includes all individual changelog files.
-* V0001__create_schema.sql: Creates the database schema.
-* V0002__create_table_person.sql: Creates the person table.
-* V0003__create_table_orders.sql: Creates the orders table.
-* V0004__alter_table_orders.sql: Alter the orders table.
-* V0005__insert_into_person.sql: Insert into the person table.
-* V0006_insert_into_orders.sql: Insert into the orders table.
+Database Schema
+The schema is managed using Liquibase and can be found in the db.changelog-master.yaml file.
 
-## Technologies Used
-* Spring Boot
-* Hibernate
-* Liquibase
-* PostgreSQL
-* Maven
+## Contributing
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes and commit them.
+4. Push to your branch.
+5. Create a pull request.
