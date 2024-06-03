@@ -20,6 +20,15 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "amount")
+    private double amount;
+
+    @Column(name = "date")
+    private Date date;
+
+    @Column(name = "payment_type")
+    private String paymentType;
+
     @ManyToOne
 //    @JoinColumn(name = "customer_id", nullable = false)
     @JoinColumns({
@@ -29,14 +38,5 @@ public class Order {
     })
     @JsonBackReference
     private Person person;
-
-    @Column(name = "date")
-    private Date date;
-
-    @Column(name = "amount")
-    private double amount;
-
-    @Column(name = "payment_type")
-    private String paymentType;
 
 }

@@ -18,9 +18,9 @@ import java.util.List;
 @IdClass(PersonId.class)
 public class Person {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+//    @Column(name = "id", unique = true)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long id;
 
     @Id
     @Column(name = "name")
@@ -34,7 +34,8 @@ public class Person {
     @Column(name = "age")
     private int age;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", unique = true)
+
     private String phoneNumber;
 
     @Column(name = "city_of_living")
@@ -43,6 +44,10 @@ public class Person {
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Order> orders;
+
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private MyUser myUser;
 
 
 }
