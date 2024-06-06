@@ -3,6 +3,7 @@ package com.agan.layerdao_hibernate.controller;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +11,13 @@ import javax.annotation.security.RolesAllowed;
 import java.security.Principal;
 
 @RestController
+@RequestMapping("/persons-jpa-query-jpql-security")
 public class SecureController {
+
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "This is a WELCOME entdoint";
+    }
 
     @Secured("ROLE_READ")
     @GetMapping("/read")
