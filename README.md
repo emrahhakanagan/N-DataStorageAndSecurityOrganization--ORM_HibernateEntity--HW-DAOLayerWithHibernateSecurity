@@ -4,83 +4,86 @@
 
 #### --> Task 1 --> DAO Layer (Data Access Object) with Hibernate
 
-# Layer DAO with JPA Repositories and JPQL Queries
+# LayerDAO with Hibernate and Security
 
-## Description
+This project demonstrates a LayerDAO implementation using Hibernate for database interactions, along with Spring Security for securing endpoints and managing user roles.
 
-This project demonstrates the use of JPA Repositories with JPQL Queries in a Spring Boot application. The application manages `Person` and `Order` entities, allowing CRUD operations and custom queries using JPQL.
+## Features
 
-## Setup and Running the Application
+- **CRUD Operations**: Basic CRUD operations on `Person` and `Order` entities.
+- **Security**: Integration of Spring Security with in-memory authentication and method-level security.
+- **Role-Based Access Control**: Users with different roles (`READ`, `WRITE`, `DELETE`) have access to specific endpoints.
+- **Method-Level Security**: Use of `@Secured`, `@RolesAllowed`, and `@PreAuthorize` annotations for securing methods.
 
-1. **Clone the Repository**
+## Getting Started
 
-    ```sh
-    git clone <repository-url>
-    cd <repository-directory>
-    ```
+### Prerequisites
 
-2. **Configure Database**
+- Java 17
+- Maven
+- PostgreSQL
 
-   Update the `application.properties` file with your PostgreSQL database configuration.
+### Installation
 
-    ```properties
-    spring.datasource.url=jdbc:postgresql://localhost:5432/your-database
-    spring.datasource.username=your-username
-    spring.datasource.password=your-password
-    spring.jpa.hibernate.ddl-auto=update
-    spring.jpa.show-sql=true
-    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-    ```
+1. **Clone the repository:**
 
-3. **Run the Application**
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
 
-    ```sh
-    ./mvnw spring-boot:run
-    ```
+2. **Configure the database:**
 
-## Endpoints
+Update the application.properties file with your PostgreSQL database configuration.
 
-1. **Get Persons by City**
 
-    ```
-    GET /persons/by-city?city={city}
-    ```
+- spring.datasource.url=jdbc:postgresql://localhost:5432/your_database
+- spring.datasource.username=your_username
+- spring.datasource.password=your_password
 
-   Returns a list of persons living in the specified city.
+3. **Build and run the application:**
 
-2. **Get Persons by Age**
+- mvn clean install
+- mvn spring-boot:run
 
-    ```
-    GET /persons/by-age-less-than?age={age}
-    ```
 
-   Returns a list of persons younger than the specified age, sorted by age in ascending order.
+## Usage
+1. Accessing Endpoints:
 
-3. **Get Person by Name and Surname**
+The following endpoints are secured and require appropriate roles for access:
 
-    ```
-    GET /persons/by-name-surname?name={name}&surname={surname}
-    ```
+- /read - Accessible by users with ROLE_READ.
+- /write - Accessible by users with ROLE_WRITE.
+- /modify - Accessible by users with ROLE_WRITE or ROLE_DELETE.
+- /user - Accessible by authenticated users, matching the username with Principal.
 
-   Returns the person with the specified name and surname.
+2. Login:
+
+Access the login page at /login. Use the following credentials for testing:
+
+- **User 1:**
+  - Username: user1
+  - Password: password1
+  - Role: READ
+- User 2:
+  - Username: user2
+  - Password: password2
+  - Role: WRITE
+- User 3:
+  - Username: user3
+  - Password: password3
+  - Role: DELETE
 
 ## Project Structure
-
-- **PersonRepositoryJPA_QueryJPQL**: Interface for database operations using JPQL queries.
-- **PersonService**: Service layer for business logic.
-- **PersonController**: REST controller for handling HTTP requests.
+- Configuration: Security configuration is in SecurityConfig.
+- Entities: Person, Order, and MyUser entities.
+- Repositories: JPA repositories for data access.
+- Services: Business logic services.
+- Controllers: REST controllers for handling HTTP requests.
 
 ## Dependencies
-
 - Spring Boot Starter Data JPA
 - Spring Boot Starter Web
-- PostgreSQL Driver
+- Spring Boot Starter Security
+-  Liquibase
+- PostgreSQL
 - Lombok
-
-## Contributing
-
-1. Fork the repository.
-2. Create a new feature branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
