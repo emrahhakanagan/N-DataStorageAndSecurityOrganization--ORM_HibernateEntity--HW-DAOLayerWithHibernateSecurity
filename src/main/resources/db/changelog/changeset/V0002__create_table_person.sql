@@ -1,5 +1,5 @@
 create table orm_hibernate_hw.person (
-id BIGSERIAL NOT NULL,
+id BIGSERIAL,
 name VARCHAR(255) NOT NULL,
 surname VARCHAR(255) NOT NULL,
 age INT NOT NULL,
