@@ -18,20 +18,16 @@ import java.util.List;
 @IdClass(PersonId.class)
 public class Person {
 
-    @Column(name = "id", unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     @Id
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @Id
-    @Column(name = "surname")
+    @Column(name = "surname", unique = true)
     private String surname;
 
     @Id
-    @Column(name = "age")
+    @Column(name = "age", unique = true)
     private int age;
 
     @Column(name = "phone_number")

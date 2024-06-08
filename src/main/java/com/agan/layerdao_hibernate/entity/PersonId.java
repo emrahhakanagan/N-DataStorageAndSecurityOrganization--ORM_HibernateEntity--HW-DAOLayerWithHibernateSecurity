@@ -8,7 +8,6 @@ import java.io.Serializable;
 
 public class PersonId implements Serializable {
 
-    private long id;
     private String name;
     private String surname;
     private int age;
