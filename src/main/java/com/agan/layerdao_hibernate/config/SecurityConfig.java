@@ -31,30 +31,32 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails user1 = User.withUsername("user1")
-                .password(encoder().encode("password1"))
-                .roles("READ")
+        UserDetails admin = User.withUsername("admin")
+                .password(encoder().encode("admin"))
+                .roles("ADMIN", "WRITE")
                 .build();
 
-        UserDetails user2 = User.withUsername("user2")
-                .password(encoder().encode("password2"))
-                .roles("WRITE")
+        UserDetails user = User.withUsername("user")
+                .password(encoder().encode("user"))
+                .roles("USER", "READ")
                 .build();
 
-        UserDetails user3 = User.withUsername("user3")
-                .password(encoder().encode("password3"))
-                .roles("DELETE")
+        UserDetails hakan = User.withUsername("hakan")
+                .password(encoder().encode("hakan"))
+                .roles("ADMIN", "USER", "WRITE", "READ")
                 .build();
 
-        return new InMemoryUserDetailsManager(user1, user2, user3);
+        return new InMemoryUserDetailsManager(admin, user, hakan);
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("persons-jpa-query-jpql-security/welcome").permitAll()
-                        .requestMatchers("persons-jpa-query-jpql-security/**").authenticated()
+                        .requestMatchers("security/welcome").permitAll()
+                        .requestMatchers("security/**").authenticated()
+                        .requestMatchers("security-method/welcome").permitAll()
+                        .requestMatchers("security-method/**").authenticated()
                 )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .build();
