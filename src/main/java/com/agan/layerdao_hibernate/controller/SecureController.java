@@ -11,30 +11,30 @@ import javax.annotation.security.RolesAllowed;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/persons-jpa-query-jpql-security")
+@RequestMapping("/security")
 public class SecureController {
 
     @GetMapping("/welcome")
     public String welcome() {
-        return "This is a WELCOME entdoint";
+        return "<h1> This is a WELCOME endpoint </h1>";
     }
 
     @Secured("ROLE_READ")
     @GetMapping("/read")
-    public String read() {
-        return "This is a READ endpoint";
+    public String read(Principal principal) {
+        return "<h2> Hi " + principal.getName() + "</h2> This is a READ endpoint";
     }
 
     @RolesAllowed("ROLE_WRITE")
     @GetMapping("/write")
-    public String write() {
-        return "This is a WRITE endpoint";
+    public String write(Principal principal) {
+        return "<h2> Hi " + principal.getName() + "</h2> This is a WRITE endpoint";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_WRITE', 'ROLE_DELETE')")
     @GetMapping("/modify")
-    public String modify() {
-        return "This is a MODIFY endpoint";
+    public String modify(Principal principal) {
+        return "<h2> Hi " + principal.getName() + "</h2> This is a MODIFY endpoint";
     }
 
     @PreAuthorize("#username == authentication.name")
