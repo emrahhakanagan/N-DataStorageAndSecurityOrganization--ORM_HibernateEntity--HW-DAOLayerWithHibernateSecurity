@@ -18,10 +18,6 @@ import java.util.List;
 @IdClass(PersonId.class)
 public class Person {
 
-//    @Column(name = "id", unique = true)
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private long id;
-
     @Id
     @Column(name = "name")
     private String name;

@@ -5,7 +5,8 @@ import com.agan.layerdao_hibernate.dao.PersonRepositoryJPA_QueryJPQL_Security;
 import com.agan.layerdao_hibernate.entity.MyUser;
 import com.agan.layerdao_hibernate.entity.Person;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -19,11 +20,21 @@ public class PersonServiceJPA_QueryJPQL_Security {
 
     private final PersonRepositoryJPA_QueryJPQL_Security personRepositoryJPAQueryJPQLSecurity;
     private final MyUserDAO myUserDAO;
-    private PasswordEncoder encoder;
+//    private PasswordEncoder encoder;
 
     public List<Person> getPersonsByCity(String city) {
         return personRepositoryJPAQueryJPQLSecurity.findByCityOfLiving(city);
+
+//        return "from service: " + city;
     }
+
+
+//    public String getPersonsByCity(String city) {
+//        return personRepositoryJPAQueryJPQLSecurity.findByCityOfLiving(city);
+//
+////        return "from service: " + city;
+//    }
+
 
     public List<Person> getPersonsByAgeLessThan(int age) {
         return personRepositoryJPAQueryJPQLSecurity.findByAgeLessThanOrderByAgeAsc(age);
@@ -34,7 +45,7 @@ public class PersonServiceJPA_QueryJPQL_Security {
     }
 
     public void addUser(MyUser user) {
-        user.setPassword(encoder.encode(user.getPassword()));
+//        user.setPassword(encoder.encode(user.getPassword()));
 
         if(user.getRoles().contains(",")) {
             String roleWithPrefix = Arrays.stream(user.getRoles().split(","))

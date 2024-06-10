@@ -1,1 +1,1 @@
-create schema orm_hibernate_hw;
+CREATE SCHEMA IF NOT EXISTS orm_hibernate_hw;

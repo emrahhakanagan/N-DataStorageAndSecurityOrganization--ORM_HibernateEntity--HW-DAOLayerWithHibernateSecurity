@@ -1,4 +1,4 @@
-create table orm_hibernate_hw.orders (
+CREATE TABLE orm_hibernate_hw.orders (
 id BIGSERIAL PRIMARY KEY NOT NULL,
 amount DOUBLE PRECISION NOT NULL,
 payment_type VARCHAR(100),
@@ -8,5 +8,5 @@ customer_surname VARCHAR(100) NOT NULL,
 customer_age INT NOT NULL,
 
 CONSTRAINT fk_person FOREIGN KEY (customer_name, customer_surname, customer_age)
-REFERENCES orm_hibernate_hw.person (name, surname, age)
+REFERENCES orm_hibernate_hw. (name, surname, age)
 );

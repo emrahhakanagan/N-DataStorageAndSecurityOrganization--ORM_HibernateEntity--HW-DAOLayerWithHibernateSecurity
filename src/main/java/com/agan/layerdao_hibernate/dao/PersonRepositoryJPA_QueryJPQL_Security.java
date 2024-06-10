@@ -1,7 +1,7 @@
 package com.agan.layerdao_hibernate.dao;
 
-import com.agan.layerdao_hibernate.entity.MyUser;
 import com.agan.layerdao_hibernate.entity.Person;
+import com.agan.layerdao_hibernate.entity.PersonId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PersonRepositoryJPA_QueryJPQL_Security extends JpaRepository<Person, Long> {
+public interface PersonRepositoryJPA_QueryJPQL_Security extends JpaRepository<Person, PersonId> {
 
     @Query("SELECT p FROM Person p WHERE p.cityOfLiving = :city")
     List<Person> findByCityOfLiving(@Param("city") String city);
