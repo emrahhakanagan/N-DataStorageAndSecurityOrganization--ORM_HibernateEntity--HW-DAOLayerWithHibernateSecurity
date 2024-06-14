@@ -1,12 +1,11 @@
 package com.agan.layerdao_hibernate.service;
 
 import com.agan.layerdao_hibernate.dao.MyUserDAO;
-import com.agan.layerdao_hibernate.dao.PersonRepositoryJPA_QueryJPQL_Security;
+import com.agan.layerdao_hibernate.dao.PersonSecurityRepository;
 import com.agan.layerdao_hibernate.entity.MyUser;
 import com.agan.layerdao_hibernate.entity.Person;
 import lombok.AllArgsConstructor;
 //import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -16,32 +15,32 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class PersonServiceJPA_QueryJPQL_Security {
+public class PersonSecurityService {
 
-    private final PersonRepositoryJPA_QueryJPQL_Security personRepositoryJPAQueryJPQLSecurity;
+    private final PersonSecurityRepository personSecurityRepository;
     private final MyUserDAO myUserDAO;
 //    private PasswordEncoder encoder;
 
     public List<Person> getPersonsByCity(String city) {
-        return personRepositoryJPAQueryJPQLSecurity.findByCityOfLiving(city);
+        return personSecurityRepository.findByCityOfLiving(city);
 
 //        return "from service: " + city;
     }
 
 
 //    public String getPersonsByCity(String city) {
-//        return personRepositoryJPAQueryJPQLSecurity.findByCityOfLiving(city);
+//        return personSecurityRepository.findByCityOfLiving(city);
 //
 ////        return "from service: " + city;
 //    }
 
 
     public List<Person> getPersonsByAgeLessThan(int age) {
-        return personRepositoryJPAQueryJPQLSecurity.findByAgeLessThanOrderByAgeAsc(age);
+        return personSecurityRepository.findByAgeLessThanOrderByAgeAsc(age);
     }
 
     public Optional<Person> getPersonByNameAndSurname(String name, String surname) {
-        return personRepositoryJPAQueryJPQLSecurity.findByNameAndSurname(name, surname);
+        return personSecurityRepository.findByNameAndSurname(name, surname);
     }
 
     public void addUser(MyUser user) {
