@@ -19,13 +19,14 @@ public class SecureController {
         return "<h1> This is a WELCOME endpoint </h1>";
     }
 
-    @Secured("ROLE_READ")
+//    @Secured("ROLE_READ") does not work correctly
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_READ')")
     @GetMapping("/read")
     public String read(Principal principal) {
         return "<h2> Hi " + principal.getName() + "</h2> This is a READ endpoint";
     }
 
-//    @RolesAllowed("ROLE_WRITE")
+//    @RolesAllowed("ROLE_WRITE") does not work correctly
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WRITE')")
     @GetMapping("/write")
     public String write(Principal principal) {
