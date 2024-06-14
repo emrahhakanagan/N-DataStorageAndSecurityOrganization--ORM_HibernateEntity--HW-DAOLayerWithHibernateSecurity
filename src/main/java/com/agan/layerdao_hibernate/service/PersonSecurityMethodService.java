@@ -12,17 +12,17 @@ import java.util.Optional;
 @Service
 public class PersonSecurityMethodService {
 
-    private final PersonSecurityMethodRepository personRepositoryJPAQueryJPQLSecurityMethod;
+    private final PersonSecurityMethodRepository personSecurityMethodRepository;
 
     public List<Person> getPersonsByCity(String city) {
-        return personRepositoryJPAQueryJPQLSecurityMethod.findByCityOfLiving(city);
+        return personSecurityMethodRepository.findByCityOfLiving(city);
     }
 
     public List<Person> getPersonsByAgeLessThan(int age) {
-        return personRepositoryJPAQueryJPQLSecurityMethod.findByAgeLessThanOrderByAgeAsc(age);
+        return personSecurityMethodRepository.findByAgeLessThanOrderByAgeAsc(age);
     }
 
     public Optional<Person> getPersonByNameAndSurname(String name, String surname) {
-        return personRepositoryJPAQueryJPQLSecurityMethod.findByNameAndSurname(name, surname);
+        return personSecurityMethodRepository.findByNameAndSurname(name, surname);
     }
 }

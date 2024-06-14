@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequestMapping("/security-method")
 public class PersonSecurityMethodController {
 
-    private final PersonSecurityMethodService personServiceJPAQueryJPQLSecurityMethod;
+    private final PersonSecurityMethodService personSecurityMethodService;
 
 
     @GetMapping("/welcome")
@@ -28,10 +28,11 @@ public class PersonSecurityMethodController {
         return ResponseEntity.ok("<h1> Welcome to -Security Method- page, which is without authorization </h1>");
     }
 
-    @Secured("ROLE_ADMIN")
+//    @Secured("ROLE_ADMIN") does not work correctly
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/by-city")
     public ResponseEntity<List<Person>> getPersonsByCity(@RequestParam String city) {
-        List<Person> persons = personServiceJPAQueryJPQLSecurityMethod.getPersonsByCity(city);
+        List<Person> persons = personSecurityMethodService.getPersonsByCity(city);
         if (persons.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -42,7 +43,7 @@ public class PersonSecurityMethodController {
     @RolesAllowed("ROLE_USER")
     @GetMapping("/by-age")
     public ResponseEntity<List<Person>> getPersonsByAgeLessThan(@RequestParam int age) {
-        List<Person> persons = personServiceJPAQueryJPQLSecurityMethod.getPersonsByAgeLessThan(age);
+        List<Person> persons = personSecurityMethodService.getPersonsByAgeLessThan(age);
         if (persons.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -53,7 +54,7 @@ public class PersonSecurityMethodController {
     @GetMapping("/by-name-surname")
     public ResponseEntity<Person> getPersonByNameAndSurname(@RequestParam String username,
             @RequestParam String name, @RequestParam String surname) {
-        Optional<Person> person = personServiceJPAQueryJPQLSecurityMethod.getPersonByNameAndSurname(name, surname);
+        Optional<Person> person = personSecurityMethodService.getPersonByNameAndSurname(name, surname);
         return person.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
