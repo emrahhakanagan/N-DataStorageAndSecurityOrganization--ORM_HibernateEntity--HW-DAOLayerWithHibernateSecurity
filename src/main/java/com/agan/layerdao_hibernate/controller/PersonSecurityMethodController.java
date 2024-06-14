@@ -1,7 +1,7 @@
 package com.agan.layerdao_hibernate.controller;
 
 import com.agan.layerdao_hibernate.entity.Person;
-import com.agan.layerdao_hibernate.service.PersonServiceJPA_QueryJPQL_SecurityMethod;
+import com.agan.layerdao_hibernate.service.PersonSecurityMethodService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -18,9 +18,9 @@ import java.util.Optional;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/security-method")
-public class PersonControllerJPA_QueryJPQL_SecurityMethod {
+public class PersonSecurityMethodController {
 
-    private final PersonServiceJPA_QueryJPQL_SecurityMethod personServiceJPAQueryJPQLSecurityMethod;
+    private final PersonSecurityMethodService personServiceJPAQueryJPQLSecurityMethod;
 
 
     @GetMapping("/welcome")

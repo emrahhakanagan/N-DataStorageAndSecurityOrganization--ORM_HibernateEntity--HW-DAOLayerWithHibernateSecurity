@@ -1,6 +1,6 @@
 package com.agan.layerdao_hibernate.service;
 
-import com.agan.layerdao_hibernate.dao.PersonRepositoryJPA_QueryJPQL_SecurityMethod;
+import com.agan.layerdao_hibernate.dao.PersonSecurityMethodRepository;
 import com.agan.layerdao_hibernate.entity.Person;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,9 +10,9 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class PersonServiceJPA_QueryJPQL_SecurityMethod {
+public class PersonSecurityMethodService {
 
-    private final PersonRepositoryJPA_QueryJPQL_SecurityMethod personRepositoryJPAQueryJPQLSecurityMethod;
+    private final PersonSecurityMethodRepository personRepositoryJPAQueryJPQLSecurityMethod;
 
     public List<Person> getPersonsByCity(String city) {
         return personRepositoryJPAQueryJPQLSecurityMethod.findByCityOfLiving(city);
