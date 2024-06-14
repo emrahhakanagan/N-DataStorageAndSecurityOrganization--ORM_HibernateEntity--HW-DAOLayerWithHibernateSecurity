@@ -4,86 +4,74 @@
 
 #### --> Task 1 --> DAO Layer (Data Access Object) with Hibernate
 
-# LayerDAO with Hibernate and Security
+# Spring Security Method-Level Protection Example
 
-This project demonstrates a LayerDAO implementation using Hibernate for database interactions, along with Spring Security for securing endpoints and managing user roles.
+This project demonstrates the use of method-level security in a Spring Boot application with JPA and Hibernate. The application includes role-based access control using annotations such as `@Secured`, `@RolesAllowed`, and `@PreAuthorize`.
 
-## Features
+## Project Structure
 
-- **CRUD Operations**: Basic CRUD operations on `Person` and `Order` entities.
-- **Security**: Integration of Spring Security with in-memory authentication and method-level security.
-- **Role-Based Access Control**: Users with different roles (`READ`, `WRITE`, `DELETE`) have access to specific endpoints.
-- **Method-Level Security**: Use of `@Secured`, `@RolesAllowed`, and `@PreAuthorize` annotations for securing methods.
+- **SecurityConfig.java**: Configuration class for setting up Spring Security.
+- **PersonSecurityMethodController.java**: Controller for managing `Person` entities with method-level security.
+- **SecureController.java**: Controller for demonstrating different levels of access control.
+- **PersonSecurityMethodRepository.java**: Repository interface for `Person` entities.
+- **PersonSecurityMethodService.java**: Service layer for `Person` entities with method-level security.
+- **Person.java**: Entity class for `Person`.
+- **PersonId.java**: Composite primary key class for `Person`.
+- **Order.java**: Entity class for `Order`.
+- **PaymentType.java**: Enum for payment types.
+- **application.properties**: Configuration properties for the Spring Boot application.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Java 17
+- Java 17 or higher
 - Maven
 - PostgreSQL
 
-### Installation
+### Setting Up the Database
 
-1. **Clone the repository:**
+1. Create a PostgreSQL database named `netology`.
+2. Update the `application.properties` file with your database credentials.
 
-   ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+### Building and Running the Application
 
-2. **Configure the database:**
+1. Clone the repository:
 
-Update the application.properties file with your PostgreSQL database configuration.
+    ```bash
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
 
+2. Build the project using Maven:
 
-- spring.datasource.url=jdbc:postgresql://localhost:5432/your_database
-- spring.datasource.username=your_username
-- spring.datasource.password=your_password
+    ```bash
+    mvn clean install
+    ```
 
-3. **Build and run the application:**
+3. Run the application:
 
-- mvn clean install
-- mvn spring-boot:run
+    ```bash
+    mvn spring-boot:run
+    ```
 
+### Testing the Endpoints
 
-## Usage
-1. Accessing Endpoints:
+Use a tool like Postman or cURL to test the different endpoints provided by the application.
 
-The following endpoints are secured and require appropriate roles for access:
+#### Public Endpoints
 
-- /read - Accessible by users with ROLE_READ.
-- /write - Accessible by users with ROLE_WRITE.
-- /modify - Accessible by users with ROLE_WRITE or ROLE_DELETE.
-- /user - Accessible by authenticated users, matching the username with Principal.
+- `GET /security/welcome`: Accessible without authentication.
 
-2. Login:
+#### Secured Endpoints
 
-Access the login page at /login. Use the following credentials for testing:
+- `GET /security/by-city?city={city}`: Requires the `ROLE_ADMIN` authority.
+- `GET /security/by-age?age={age}`: Requires the `ROLE_ADMIN` authority.
+- `GET /security/by-name-surname?name={name}&surname={surname}`: Requires the `ROLE_ADMIN` authority.
 
-- **User 1:**
-  - Username: user1
-  - Password: password1
-  - Role: READ
-- User 2:
-  - Username: user2
-  - Password: password2
-  - Role: WRITE
-- User 3:
-  - Username: user3
-  - Password: password3
-  - Role: DELETE
+### Method-Level Security Annotations
 
-## Project Structure
-- Configuration: Security configuration is in SecurityConfig.
-- Entities: Person, Order, and MyUser entities.
-- Repositories: JPA repositories for data access.
-- Services: Business logic services.
-- Controllers: REST controllers for handling HTTP requests.
-
-## Dependencies
-- Spring Boot Starter Data JPA
-- Spring Boot Starter Web
-- Spring Boot Starter Security
--  Liquibase
-- PostgreSQL
-- Lombok
+- `@Secured("ROLE_READ")`: Restricts access to users with the `ROLE_READ` authority.
+- `@RolesAllowed("ROLE_WRITE")`: Restricts access to users with the `ROLE_WRITE` authority.
+- `@PreAuthorize("hasAnyRole('ROLE_WRITE', 'ROLE_DELETE')")`: Restricts access to users with either the `ROLE_WRITE` or `ROLE_DELETE` authority.
+- `@PreAuthorize("#username == authentication.name")`: Restricts access to the authenticated user whose username matches the `username` parameter.
