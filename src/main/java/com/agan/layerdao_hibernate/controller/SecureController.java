@@ -25,7 +25,8 @@ public class SecureController {
         return "<h2> Hi " + principal.getName() + "</h2> This is a READ endpoint";
     }
 
-    @RolesAllowed("ROLE_WRITE")
+//    @RolesAllowed("ROLE_WRITE")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WRITE')")
     @GetMapping("/write")
     public String write(Principal principal) {
         return "<h2> Hi " + principal.getName() + "</h2> This is a WRITE endpoint";
