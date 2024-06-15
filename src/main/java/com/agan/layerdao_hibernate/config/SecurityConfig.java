@@ -5,22 +5,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
 @AllArgsConstructor
 public class SecurityConfig {
 
@@ -54,9 +52,13 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("security/welcome").permitAll()
-                        .requestMatchers("security/**").authenticated()
-                        .requestMatchers("security-method/welcome").permitAll()
-                        .requestMatchers("security-method/**").authenticated()
+                        .requestMatchers("security/by-city").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("security/by-age").hasAuthority("ROLE_USER")
+                        .requestMatchers("security-test/welcome").permitAll()
+                        .requestMatchers("security-test/read").hasAuthority("ROLE_USER")
+                        .requestMatchers("security-test/write").hasAnyAuthority("ROLE_ADMIN", "ROLE_WRITE")
+                        .requestMatchers("security-test/modify").hasAnyAuthority("ROLE_WRITE", "ROLE_DELETE")
+                        .requestMatchers("security-test/user").hasAnyAuthority("ROLE_ADMIN", "ROLE_READ")
                 )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .build();
