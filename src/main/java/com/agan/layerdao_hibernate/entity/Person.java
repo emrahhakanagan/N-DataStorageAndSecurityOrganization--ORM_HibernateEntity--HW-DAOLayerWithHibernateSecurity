@@ -1,10 +1,13 @@
 package com.agan.layerdao_hibernate.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -16,19 +19,15 @@ import lombok.NoArgsConstructor;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Id
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @Id
-    @Column(name = "surname")
+    @Column(name = "surname", unique = true)
     private String surname;
 
     @Id
-    @Column(name = "age")
+    @Column(name = "age", unique = true)
     private int age;
 
     @Column(name = "phone_number")
@@ -37,6 +36,9 @@ public class Person {
     @Column(name = "city_of_living")
     private String cityOfLiving;
 
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Order> orders;
+
 
 }
-

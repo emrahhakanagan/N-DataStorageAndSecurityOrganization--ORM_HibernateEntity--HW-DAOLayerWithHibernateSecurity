@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset/V0001__create_schema_orm_hibernate_hw.sql
+  - include:
+      file: db/changelog/changeset/V0002__create_table_person.sql
+  - include:
+      file: db/changelog/changeset/V0003__create_table_orders.sql
+  - include:
+      file: db/changelog/changeset/V0004__alter_table_orders.sql
+  - include:
+      file: db/changelog/changeset/V0005__insert_into_person.sql
+  - include:
+      file: db/changelog/changeset/V0006_insert_into_orders.sql

@@ -4,52 +4,71 @@
 
 #### --> Task 1 --> DAO Layer (Data Access Object) with Hibernate
 
-# DAO Layer with Hibernate
+# ORM Hibernate Entity Lifecycle Embedding Relationships HW - LayerDAO Hibernate with Spring Security (Security Filter Chain)
 
-## Description
+This project demonstrates using Hibernate ORM for managing entity lifecycle and embedding relationships using a Layered DAO pattern. It includes configurations for security and access control using Spring Security.
 
-This project is a Spring Boot application that demonstrates the use of the Data Access Object (DAO) pattern with Hibernate. It includes functionalities to interact with a database of persons, specifically allowing retrieval of persons based on their city of living.
+## Project Structure
 
-## Prerequisites
+### Configuration Files
 
-- Java 17 or higher
-- Maven 3.6.3 or higher
-- PostgreSQL or another relational database
+- **SecurityConfig.java**: Configuration for Spring Security, defining user roles, authentication providers, and security filter chains.
+- **application.properties**: Application configuration properties.
+- **db.changelog-master.yaml**: Liquibase changelog file for database migrations.
 
-## Getting Started
+### Entities
 
-### Clone the Repository
+- **Person.java**: Entity representing a person.
+- **PersonId.java**: Composite key class for the Person entity.
+- **Order.java**: Entity representing an order.
+- **MyUser.java**: Entity representing a user in the system.
 
+### Repositories
+
+- **PersonSecurityMethodRepository.java**: JPA repository for the Person entity.
+- **MyUserDAO.java**: Data access object for the MyUser entity.
+- **PersonSecurityRepository.java**: Another JPA repository for the Person entity used in a different context.
+
+### Services
+
+- **PersonSecurityMethodService.java**: Service layer for managing Person entities.
+- **MyUserDetailsService.java**: Service for loading user-specific data.
+- **PersonSecurityService.java**: Another service layer for managing Person entities with security methods.
+
+### Controllers
+
+- **PersonSecurityMethodController.java**: REST controller for managing Person entities.
+- **SecureController.java**: REST controller for demonstrating security features.
+
+## Endpoints
+
+### Public Endpoints
+
+- **GET /security-test/welcome**: Publicly accessible endpoint.
+
+### Protected Endpoints
+
+- **GET /security-test/test**: Requires ADMIN authority.
+- **GET /security-test/write**: Requires ADMIN or WRITE authority.
+- **GET /security-test/modify**: Requires WRITE or DELETE authority.
+- **GET /security-test/user**: Requires authentication, returns the username of the authenticated user.
+
+## Running the Application
+
+1. Clone the repository.
+2. Update the `application.properties` with your database configuration.
+3. Run the application using the following command:
+   ```sh
+   mvn spring-boot:run
+4. Access the application at http://localhost:8080.
+
+## Example Requests
+- Public Endpoint:
+```sh
+  GET http://localhost:8080/security-test/welcome
 ```
-git clone <repository-url>
-cd <repository-directory>
+
+- Protected Endpoint (ADMIN role required):
+```sh
+  GET http://localhost:8080/security-test/test
 ```
-
-## Set Up the Database
-Create a PostgreSQL database named.
-Update the application.properties file with your PostgreSQL username and password.
-
-## Build and Run the Application
-- mvn clean install
-- mvn spring-boot:run
-
-
-## Application Structure
-- Entity: The Person entity represents the persons table in the database.
-- DAO: The PersonDAOImpl class provides methods to interact with the database.
-- Service: The PersonService class contains business logic and calls the DAO methods.
-- Controller: The PersonController class handles HTTP requests and responses.
-
-## API Endpoints
-- GET /persons/by-city: Retrieves a list of persons based on the city of living.
-  - Query Parameters:
-      - city (String): The name of the city.
-
-## Example Request
-curl -X GET "http://localhost:8080/persons/by-city?city=Moscow"
-
-## Dependencies
-- Spring Boot Starter Data JPA
-- Spring Boot Starter Web
-- PostgreSQL JDBC Driver
-- Lombok
