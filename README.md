@@ -4,74 +4,71 @@
 
 #### --> Task 1 --> DAO Layer (Data Access Object) with Hibernate
 
-# Spring Security Method-Level Protection Example
+# ORM Hibernate Entity Lifecycle Embedding Relationships HW - LayerDAO Hibernate with Spring Security (Security Filter Chain)
 
-This project demonstrates the use of method-level security in a Spring Boot application with JPA and Hibernate. The application includes role-based access control using annotations such as `@Secured`, `@RolesAllowed`, and `@PreAuthorize`.
+This project demonstrates using Hibernate ORM for managing entity lifecycle and embedding relationships using a Layered DAO pattern. It includes configurations for security and access control using Spring Security.
 
 ## Project Structure
 
-- **SecurityConfig.java**: Configuration class for setting up Spring Security.
-- **PersonSecurityMethodController.java**: Controller for managing `Person` entities with method-level security.
-- **SecureController.java**: Controller for demonstrating different levels of access control.
-- **PersonSecurityMethodRepository.java**: Repository interface for `Person` entities.
-- **PersonSecurityMethodService.java**: Service layer for `Person` entities with method-level security.
-- **Person.java**: Entity class for `Person`.
-- **PersonId.java**: Composite primary key class for `Person`.
-- **Order.java**: Entity class for `Order`.
-- **PaymentType.java**: Enum for payment types.
-- **application.properties**: Configuration properties for the Spring Boot application.
+### Configuration Files
 
-## Getting Started
+- **SecurityConfig.java**: Configuration for Spring Security, defining user roles, authentication providers, and security filter chains.
+- **application.properties**: Application configuration properties.
+- **db.changelog-master.yaml**: Liquibase changelog file for database migrations.
 
-### Prerequisites
+### Entities
 
-- Java 17 or higher
-- Maven
-- PostgreSQL
+- **Person.java**: Entity representing a person.
+- **PersonId.java**: Composite key class for the Person entity.
+- **Order.java**: Entity representing an order.
+- **MyUser.java**: Entity representing a user in the system.
 
-### Setting Up the Database
+### Repositories
 
-1. Create a PostgreSQL database named `netology`.
-2. Update the `application.properties` file with your database credentials.
+- **PersonSecurityMethodRepository.java**: JPA repository for the Person entity.
+- **MyUserDAO.java**: Data access object for the MyUser entity.
+- **PersonSecurityRepository.java**: Another JPA repository for the Person entity used in a different context.
 
-### Building and Running the Application
+### Services
 
-1. Clone the repository:
+- **PersonSecurityMethodService.java**: Service layer for managing Person entities.
+- **MyUserDetailsService.java**: Service for loading user-specific data.
+- **PersonSecurityService.java**: Another service layer for managing Person entities with security methods.
 
-    ```bash
-    git clone <repository-url>
-    cd <repository-directory>
-    ```
+### Controllers
 
-2. Build the project using Maven:
+- **PersonSecurityMethodController.java**: REST controller for managing Person entities.
+- **SecureController.java**: REST controller for demonstrating security features.
 
-    ```bash
-    mvn clean install
-    ```
+## Endpoints
 
-3. Run the application:
+### Public Endpoints
 
-    ```bash
-    mvn spring-boot:run
-    ```
+- **GET /security-test/welcome**: Publicly accessible endpoint.
 
-### Testing the Endpoints
+### Protected Endpoints
 
-Use a tool like Postman or cURL to test the different endpoints provided by the application.
+- **GET /security-test/test**: Requires ADMIN authority.
+- **GET /security-test/write**: Requires ADMIN or WRITE authority.
+- **GET /security-test/modify**: Requires WRITE or DELETE authority.
+- **GET /security-test/user**: Requires authentication, returns the username of the authenticated user.
 
-#### Public Endpoints
+## Running the Application
 
-- `GET /security/welcome`: Accessible without authentication.
+1. Clone the repository.
+2. Update the `application.properties` with your database configuration.
+3. Run the application using the following command:
+   ```sh
+   mvn spring-boot:run
+4. Access the application at http://localhost:8080.
 
-#### Secured Endpoints
+## Example Requests
+- Public Endpoint:
+```sh
+  GET http://localhost:8080/security-test/welcome
+```
 
-- `GET /security/by-city?city={city}`: Requires the `ROLE_ADMIN` authority.
-- `GET /security/by-age?age={age}`: Requires the `ROLE_ADMIN` authority.
-- `GET /security/by-name-surname?name={name}&surname={surname}`: Requires the `ROLE_ADMIN` authority.
-
-### Method-Level Security Annotations
-
-- `@Secured("ROLE_READ")`: Restricts access to users with the `ROLE_READ` authority.
-- `@RolesAllowed("ROLE_WRITE")`: Restricts access to users with the `ROLE_WRITE` authority.
-- `@PreAuthorize("hasAnyRole('ROLE_WRITE', 'ROLE_DELETE')")`: Restricts access to users with either the `ROLE_WRITE` or `ROLE_DELETE` authority.
-- `@PreAuthorize("#username == authentication.name")`: Restricts access to the authenticated user whose username matches the `username` parameter.
+- Protected Endpoint (ADMIN role required):
+```sh
+  GET http://localhost:8080/security-test/test
+```
