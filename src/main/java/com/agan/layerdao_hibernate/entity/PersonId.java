@@ -1,17 +1,19 @@
 package com.agan.layerdao_hibernate.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonId implements Serializable {
 
-    protected String name;
+    private String name;
     private String surname;
     private int age;
 

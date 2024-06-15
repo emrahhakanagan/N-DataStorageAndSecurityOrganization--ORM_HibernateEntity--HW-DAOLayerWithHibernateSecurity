@@ -5,8 +5,7 @@ import com.agan.layerdao_hibernate.entity.Person;
 import com.agan.layerdao_hibernate.service.PersonSecurityService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.Optional;
 public class PersonSecurityController {
 
     private final PersonSecurityService personSecurityService;
-//    private PasswordEncoder encoder;
 
     @GetMapping("/welcome")
     public ResponseEntity<String> welcome(@RequestParam String name) {
@@ -34,7 +32,7 @@ public class PersonSecurityController {
     }
 
     @GetMapping("/by-city")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Person>> getPersonsByCity(@RequestParam String city) {
         List<Person> persons = personSecurityService.getPersonsByCity(city);
         if (persons.isEmpty()) {
@@ -45,7 +43,7 @@ public class PersonSecurityController {
     }
 
     @GetMapping("/by-age")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Person>> getPersonsByAgeLessThan(@RequestParam int age) {
         List<Person> persons = personSecurityService.getPersonsByAgeLessThan(age);
         if (persons.isEmpty()) {
@@ -55,7 +53,7 @@ public class PersonSecurityController {
     }
 
     @GetMapping("/by-name-surname")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<Person> getPersonByNameAndSurname(@RequestParam String name, @RequestParam String surname) {
         Optional<Person> person = personSecurityService.getPersonByNameAndSurname(name, surname);
         return person.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());

@@ -31,7 +31,6 @@ public class Person {
     private int age;
 
     @Column(name = "phone_number", unique = true)
-
     private String phoneNumber;
 
     @Column(name = "city_of_living")
@@ -44,7 +43,4 @@ public class Person {
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private MyUser myUser;
-
-
 }
-

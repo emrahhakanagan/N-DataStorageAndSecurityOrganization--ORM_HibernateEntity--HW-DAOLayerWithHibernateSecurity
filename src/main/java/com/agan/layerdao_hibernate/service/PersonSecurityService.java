@@ -5,7 +5,7 @@ import com.agan.layerdao_hibernate.dao.PersonSecurityRepository;
 import com.agan.layerdao_hibernate.entity.MyUser;
 import com.agan.layerdao_hibernate.entity.Person;
 import lombok.AllArgsConstructor;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -19,32 +19,25 @@ public class PersonSecurityService {
 
     private final PersonSecurityRepository personSecurityRepository;
     private final MyUserDAO myUserDAO;
-//    private PasswordEncoder encoder;
+    private PasswordEncoder encoder;
+
 
     public List<Person> getPersonsByCity(String city) {
         return personSecurityRepository.findByCityOfLiving(city);
-
-//        return "from service: " + city;
     }
-
-
-//    public String getPersonsByCity(String city) {
-//        return personSecurityRepository.findByCityOfLiving(city);
-//
-////        return "from service: " + city;
-//    }
 
 
     public List<Person> getPersonsByAgeLessThan(int age) {
         return personSecurityRepository.findByAgeLessThanOrderByAgeAsc(age);
     }
 
+
     public Optional<Person> getPersonByNameAndSurname(String name, String surname) {
         return personSecurityRepository.findByNameAndSurname(name, surname);
     }
 
     public void addUser(MyUser user) {
-//        user.setPassword(encoder.encode(user.getPassword()));
+        user.setPassword(encoder.encode(user.getPassword()));
 
         if(user.getRoles().contains(",")) {
             String roleWithPrefix = Arrays.stream(user.getRoles().split(","))
