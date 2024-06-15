@@ -19,15 +19,15 @@ import java.util.List;
 public class Person {
 
     @Id
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @Id
-    @Column(name = "surname")
+    @Column(name = "surname", unique = true)
     private String surname;
 
     @Id
-    @Column(name = "age")
+    @Column(name = "age", unique = true)
     private int age;
 
     @Column(name = "phone_number", unique = true)

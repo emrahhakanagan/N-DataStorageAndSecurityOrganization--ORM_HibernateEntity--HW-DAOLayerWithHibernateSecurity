@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Builder
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class PersonId implements Serializable {
 
     private String name;
