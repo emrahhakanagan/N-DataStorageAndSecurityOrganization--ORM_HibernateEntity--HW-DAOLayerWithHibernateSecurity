@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PersonSecurityMethodRepository extends JpaRepository<Person, Long> {
+public interface PersonSecurityRepository extends JpaRepository<Person, Long> {
 
     @Query("SELECT p FROM Person p WHERE p.cityOfLiving = :city")
     List<Person> findByCityOfLiving(@Param("city") String city);

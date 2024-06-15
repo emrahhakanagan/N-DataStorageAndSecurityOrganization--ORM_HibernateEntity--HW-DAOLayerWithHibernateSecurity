@@ -1,7 +1,7 @@
 package com.agan.layerdao_hibernate.controller;
 
 import com.agan.layerdao_hibernate.entity.Person;
-import com.agan.layerdao_hibernate.service.PersonSecurityMethodService;
+import com.agan.layerdao_hibernate.service.PersonSecurityService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/security")
-public class PersonSecurityMethodController {
+public class PersonSecurityController {
 
-    private final PersonSecurityMethodService personSecurityMethodService;
+    private final PersonSecurityService personSecurityService;
 
 
     @GetMapping("/welcome")
@@ -27,7 +27,7 @@ public class PersonSecurityMethodController {
 
     @GetMapping("/by-city")
     public ResponseEntity<List<Person>> getPersonsByCity(@RequestParam String city) {
-        List<Person> persons = personSecurityMethodService.getPersonsByCity(city);
+        List<Person> persons = personSecurityService.getPersonsByCity(city);
         if (persons.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -38,7 +38,7 @@ public class PersonSecurityMethodController {
 
     @GetMapping("/by-age")
     public ResponseEntity<List<Person>> getPersonsByAgeLessThan(@RequestParam int age) {
-        List<Person> persons = personSecurityMethodService.getPersonsByAgeLessThan(age);
+        List<Person> persons = personSecurityService.getPersonsByAgeLessThan(age);
         if (persons.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
